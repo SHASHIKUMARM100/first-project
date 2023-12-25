@@ -1,0 +1,30 @@
+pipeline {
+agent none
+
+stages {
+stage('git checkout') {
+agent {
+label "maven"
+}
+steps {
+Repo link 
+}
+}
+stage('build') {
+agent {
+label "tomcat"
+}
+steps {
+sh "mvn clean install"
+}
+}
+stage('tomcat') {
+agent {
+label "tomcat"
+}
+steps {
+sh "cp /home/ubuntu/workspace/assign/target/myweb-0.0.9.war /opt/tomcat/apache-tomcat-9.0.68/webapps/"
+}
+}
+}
+}
